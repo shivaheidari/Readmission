@@ -1,4 +1,5 @@
-#using data in mongodb
+#getting know the data  
+
 from pymongo import MongoClient
 
 client = MongoClient("mongodb://localhost:27017/")

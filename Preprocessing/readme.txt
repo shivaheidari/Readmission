@@ -3,3 +3,4 @@ removed cases:
     newborns, transfers, deaths, planned readmission.
 
 labels: addmited, non-readmitted
+
