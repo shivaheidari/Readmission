@@ -1,15 +1,11 @@
-import csv
+#using data in mongodb
+from pymongo import MongoClient
 
+client = MongoClient("mongodb://localhost:27017/")
+db = client["MIMIC"]
+list_collection = db.list_collection_names()
 
-input_file = "../Data/NOTEEVENTS.csv"
-output_file = "../Data/NOTEEVENTS_CLEAN.csv"
-
-with open(input_file, 'r') as infile, open(output_file, 'w') as outfile:
-    reader = csv.reader(infile)
-    writer = csv.writer(outfile)
-    header = next(reader)
-    header = [col if col != 'STORETIME' else 'CHARTTIME' for col in header]
-    writer.writerow(header)
-
-    for row in reader:
-        writer.writerow(row)
+collection = db["Admission"]
+print(collection.count_documents({}))
+collection = db["Noteevents"]
+print(collection.count_documents({}))
