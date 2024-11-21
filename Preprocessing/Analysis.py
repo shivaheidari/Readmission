@@ -10,3 +10,4 @@ print(admission.count_documents({}))
 noteevents = db["Noteevents"]
 print(noteevents.count_documents({}))
 
+
