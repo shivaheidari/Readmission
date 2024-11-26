@@ -11,15 +11,18 @@ noteevents = db["Noteevents"]
 print(noteevents.count_documents({}))
 
 
-#find the number of patients
 '''
+filter data :
 
 hospital readmisiions = unplanned visits within 30 days from earleier state. #admission_TYPE = "EMERGENCY" or "URGENT"Exluce NEWBORNS, death, ...
-'''
-
-'''
-
 remove : new newbors, transfers, deaths, and planned readmission: discharge_location: HOME
+find nursing notes, radilogy report , physician note, findings reports, lab report, EGG report, and progress not before 24 cut-off
+find discharge summary after 24 hours.
+
+in the Noteevents includes discharge summary, category, which includes CATEGORY, 
+
+#subject_ID in ADMISSION and NOTEEVENTS is key
 '''
+
 
 
