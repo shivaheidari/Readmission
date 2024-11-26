@@ -26,3 +26,9 @@ in the Noteevents includes discharge summary, category, which includes CATEGORY,
 
 
 
+#find query
+
+doc = admission.find({"SUBJECT_ID" : 22})
+print(doc)
+
+# for doc in admission.find()
