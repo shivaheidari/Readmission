@@ -28,9 +28,10 @@ in the Noteevents includes discharge summary, category, which includes CATEGORY,
 
 #find query
 
-docs = admission.find({"SUBJECT_ID" : 22})
+docs = admission.find({}, {"SUBJECT_ID", "ADMISSION_TYPE"})
 for doc in docs:
     print(doc)
-docs = noteevents.find({"SUBJECT_ID": 22})
-for doc in docs:
-    print(doc)
+# docs = noteevents.find({"SUBJECT_ID": 22})
+# for doc in docs:
+#     print(doc)
+
