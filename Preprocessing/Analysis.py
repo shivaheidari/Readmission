@@ -28,10 +28,15 @@ in the Noteevents includes discharge summary, category, which includes CATEGORY,
 
 #find query
 
-docs = admission.find({}, {"SUBJECT_ID", "ADMISSION_TYPE"})
+#docs = admission.find({}, {"_id":0, "SUBJECT_ID":1, "ADMISSION_TYPE":1})
+#docs = admission.find({"HOSPITAL_EXPIRE_FLAG":1}, {"SUBJECT_ID":1})
+docs = admission.find({"ADMISSION_TYPE": {"$regex":"EMERGENCY"}})
 for doc in docs:
     print(doc)
 # docs = noteevents.find({"SUBJECT_ID": 22})
 # for doc in docs:
 #     print(doc)
 
+#limit dates
+
+#join the admission and noteevets
