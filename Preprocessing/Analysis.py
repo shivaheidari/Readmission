@@ -47,10 +47,20 @@ pipeline = [
 
 # Execute the aggregation
 results = list(admission.aggregate(pipeline))
-# Print the results
-patients_with_admissions = db["patients_with_admissions"]
-patients_with_admissions.insert_many(results)
+if results:
 
+# Print the results
+    print("data exists")
+    patients_admissions = db["patients_with_admissions"]
+    patients_admissions.insert_many(results)
+    print(patients_admissions.count_documents({}))
+    print(admission.find_one())
+else: 
+    print("nodata")
+
+
+for doc in patients_admissions.find():
+    print(doc)
 #limit dates
 
 #join the admission and noteevets
