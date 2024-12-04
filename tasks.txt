@@ -9,7 +9,8 @@ Developing an NLP-based predictive model that analyzes clinical notes and patien
 -----------Subgoals-----------------
 
 1) Data Prepration: patients' records and clinical notes. 
-    1-1: need the data like: patient, admission histories.
+    1-1: need the data like: patient, admission histories: ---Done----
+    1-2: Remove data with readmissions like newborns.
 
 
 2) Prerproces text data : removing PHI, normalize text, tokenize, etc.
