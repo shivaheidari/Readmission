@@ -42,15 +42,14 @@ check if how many unique patients there are.
 '''
 # 
 pipeline = [
-    { "$group": { "_id": "$SUBJECT_ID", "count": { "$sum": 1 } } }, { "$match": { "count": { "$gt": 1 } } }
+    { "$group": { "_id": "$SUBJECT_ID", "count":{"$sum":1}}}, {"$match": {"count":{"$gt":1}}}
 ]
 
 # Execute the aggregation
 results = admission.aggregate(pipeline)
-print(results.count())
 # Print the results
-# for result in results:
-#     print(result)
+for result in results:
+    print(result)
 
 #limit dates
 

@@ -12,7 +12,7 @@ Developing an NLP-based predictive model that analyzes clinical notes and patien
     1-1: need the data like: patient, admission histories.
 
 
-2) Prerpcess text data : removing PHI, normalize text, tokenize, etc.
+2) Prerproces text data : removing PHI, normalize text, tokenize, etc.
 
 3) Create label for readmission risk based on hospital stay intervals.
 
