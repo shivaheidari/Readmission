@@ -14,15 +14,20 @@ Developing an NLP-based predictive model that analyzes clinical notes and patien
     1-3: Remove readmissions more than 30 days.
     1-4: Can I detect who generated these notes?
     
-2) Prerproces text data : removing PHI, normalize text, tokenize, etc.
+2) Prerproces text data : removing PHI, normalize text, tokenize, etc. 
+    2-1: clinical XLNET:https://huggingface.co/papers/1912.11975
 
 3) Create label for readmission risk based on hospital stay intervals.
+    if subjectid.count>2: check the discharge and admission times. if delta_t<30 days: readmission = True
+    all the notes of a patients including admission, ct, etc, are combined together and then divided into chuncks based on the smax ize of 
+    a sequence model.
 
 4) Extrct features from clinical notes using biobert.
 
 5) Include structre data like patient demographic diagnoisis and lab results.
 
 6) Fine-tune a language model using clinical notes to generate text embeddings?
+    6-1: use RNNS as benchmark
 
 7) Build the prediction model
 
