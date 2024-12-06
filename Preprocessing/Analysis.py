@@ -61,11 +61,10 @@ check if how many unique patients there are.
 #     print("nodata")
 
 
-print(patients_admissions.count_documents({"admissions":{"$size":1}}))
+#print(patients_admissions.count_documents({"admissions":{"$size":1}}))
 
 #patients_admissions.delete_many({"admissions":{"$size":1}})
 #limit dates
 
 #join the admission and noteevets
-
 
