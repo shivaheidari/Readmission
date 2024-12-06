@@ -13,6 +13,7 @@ Developing an NLP-based predictive model that analyzes clinical notes and patien
     1-2: Remove data with readmissions like newborns.
     1-3: Remove readmissions more than 30 days.
     1-4: Can I detect who generated these notes?
+    1-5: subsampling to overcome imbalanced data
     
 2) Prerproces text data : removing PHI, normalize text, tokenize, etc. 
     2-1: clinical XLNET:https://huggingface.co/papers/1912.11975
