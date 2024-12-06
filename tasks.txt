@@ -6,14 +6,14 @@ MIMIC-III
 
 Developing an NLP-based predictive model that analyzes clinical notes and patient data to predict the risk of hospital readmissions.
 
------------Subgoals-----------------
+-----------Sub-goals-----------------
 
 1) Data Prepration: patients' records and clinical notes. 
     1-1: need the data like: patient, admission histories: ---Done----
     1-2: Remove data with readmissions like newborns.
+    1-3: Remove readmissions more than 30 days.
+    1-4: Can I detect who generated these notes?
     
-
-
 2) Prerproces text data : removing PHI, normalize text, tokenize, etc.
 
 3) Create label for readmission risk based on hospital stay intervals.
