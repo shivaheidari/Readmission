@@ -16,6 +16,7 @@ Developing an NLP-based predictive model that analyzes clinical notes and patien
     1-5: subsampling to overcome imbalanced data
     Divide the notes into smaller chunks corresponding to single admissions.
     Each chunk is treated as a unit for prediction.
+    1-6: notes: all the notes from addmission (concatenated) to 24 hours before the discharge time
 2) Prerproces text data : removing PHI, normalize text, tokenize, etc. 
     2-1: clinical XLNET:https://huggingface.co/papers/1912.11975
 
