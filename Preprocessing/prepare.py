@@ -8,9 +8,13 @@ admission = db["Admission"]
 print(admission.count_documents({}))
 noteevents = db["Noteevents"]
 print(noteevents.count_documents({}))
+patient_admissions = db["patients_admissions"]
+#print(patient_admissions.find_one())
+
+pipelien = [{}]
+
 
 #from patients-admissions collection find patients with readmissions and transfer the data into another collection like patients-readmissions
-
 
 
 # from the collection patients-readmissions create a collection like patient; readmission; [notes] * notes comes from NOTEEVENTS refine categories 
