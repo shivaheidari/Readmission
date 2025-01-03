@@ -37,17 +37,34 @@ pipeline = [
             "as": "previous_admissions"  # Output field name for the array
         }
     },
-    # Optionally, you can add an unwind to flatten the previous_admissions array if you want individual documents
+
     {
         "$unwind": {
             "path": "$previous_admissions",
             "preserveNullAndEmptyArrays": True  # This ensures you don't lose documents with no match
         }
     },
-    # Optional: Add $match to only find documents with at least one previous admission
+
+
+    {
+        "$addFields": {
+            "time_difference": {
+                "$divide": [
+                    { 
+                        "$subtract": [
+                            { "$toDate": "$admittime" },  # Current admission time
+                            { "$toDate": "$previous_admissions.dischtime" }  # Previous discharge time
+                        ]
+                    },
+                    1000 * 60 * 60 * 24  # Convert milliseconds to days
+                ]
+            }
+        }
+    },
+ 
     {
         "$match": {
-            "previous_admissions": { "$ne": [] }
+            "time_difference": { "$gt": 0, "$lte": 30 } 
         }
     }
 ]
