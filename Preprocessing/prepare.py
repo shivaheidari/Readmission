@@ -7,74 +7,58 @@ list_collection = db.list_collection_names()
 admission = db["Admission"]
 print(admission.count_documents({}))
 noteevents = db["Noteevents"]
-print(noteevents.count_documents({}))
+#print(noteevents.count_documents({}))
 patient_admissions = db["patients_admissions"]
 #print(patient_admissions.find_one())
-
-#
-
-# pipeline = [
-    
-#     #lookup previous admission for each patient 
-    
-#     {"$lookup":{"from":"admission", 
-#                 "localField":"SUBJECT_ID",
-#                 "foreignField":"SUBJECT_ID",
-#                 "as":"previous_admissions"}}]
-# results = admission.aggregate(pipeline)
-
-# for doc in results:
-#     print(doc)
-
-
+print("begine")
 pipeline = [
-    # Lookup previous admission for each patient
-    {
-        "$lookup": {
-            "from": "Admission",  # Join with the same 'admission' collection
-            "localField": "SUBJECT_ID",  # Field in current collection
-            "foreignField": "SUBJECT_ID",  # Field in 'admission' collection
-            "as": "previous_admissions"  # Output field name for the array
-        }
-    },
+    # Unwind admissions array
+    { "$unwind": { "path": "$admissions", "includeArrayIndex": "index" } },
+    
+    # Sort admissions by 'admittime'
+    { "$sort": { "SUBJECT_ID": 1, "admissions.ADMITIME": 1 } },
 
-    {
-        "$unwind": {
-            "path": "$previous_admissions",
-            "preserveNullAndEmptyArrays": True  # This ensures you don't lose documents with no match
-        }
-    },
+    # Group back into arrays but with sorted order
+    { "$group": {
+        "_id": "$_id",
+        "SUBJECT_ID": { "$first": "$SUBJECT_ID" },
+        "admissions": { "$push": "$admissions" }
+    }},
 
-
+    # Add a new field to calculate delta_t
     {
         "$addFields": {
-            "time_difference": {
-                "$divide": [
-                    { 
-                        "$subtract": [
-                            { "$toDate": "$admittime" },  # Current admission time
-                            { "$toDate": "$previous_admissions.dischtime" }  # Previous discharge time
+            "readmission": {
+                "$reduce": {
+                    "input": { "$range": [0, { "$size": "$admissions" } ] },
+                    "initialValue": False,
+                    "in": {
+                        "$cond": [
+                            { "$lt": [
+                                {
+                                    "$dateDiff": {
+                                        "startDate": { "$arrayElemAt": ["$admissions.dischtime", "$$this"] },
+                                        "endDate": { "$arrayElemAt": ["$admissions.admittime", { "$add": ["$$this", 1] }] },
+                                        "unit": "day"
+                                    }
+                                },
+                                30
+                            ]},
+                            True,
+                            "$$value"
                         ]
-                    },
-                    1000 * 60 * 60 * 24  # Convert milliseconds to days
-                ]
+                    }
+                }
             }
-        }
-    },
- 
-    {
-        "$match": {
-            "time_difference": { "$gt": 0, "$lte": 30 } 
         }
     }
 ]
 
-# Execute the aggregation
-results = admission.aggregate(pipeline)
+print("end")
+results = db.patients_admissions.aggregate(pipeline)
 
-# Check the results
-for doc in results:
-    print(doc)
+# Save the results to a new collection
+db.filtered_patients.insert_many(list(results))
 
 
 
