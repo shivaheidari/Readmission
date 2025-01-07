@@ -11,7 +11,10 @@ noteevents = db["Noteevents"]
 patient_admissions = db["patients_admissions"]
 #print(patient_admissions.find_one())
 print(db.list_collection_names())
-readmission_status = db["admissions_readmissions_HAMDM"]
+readmission_status = db["readmission_status"]
+readmitted = db["readmitted"]
+
+
 pipeline_true_readmission = [
     # Unwind admissions array
     { "$unwind": { "path": "$admissions", "includeArrayIndex": "index" } },
@@ -54,7 +57,6 @@ pipeline_true_readmission = [
         }
     }
 ]
-
 
 # Aggregation pipeline
 pipeline = [
@@ -137,10 +139,7 @@ pipeline = [
     # Save results in a new collection
 ]
 
-
-
-
-pipeline_last = [ { 
+pipeline_last = [{ 
         "$addFields": {
             "DISCHTIME": { "$toDate": "$DISCHTIME" },
             "ADMITTIME": { "$toDate": "$ADMITTIME" }
@@ -217,44 +216,56 @@ pipeline_last = [ {
     }
 ]
 
-pipeline_readmission_notes = [{"$match":{"readmission":True}}]
+pipeline_readmission_notes = [
+{"$lookup":{
+    "from":"Noteevents",
+    "localField":"HADM_ID", 
+    "foreignField": "HADM_ID",
+    "as": "related_notes"
+}},
+{
+        "$project": {
+            "_id": 1,
+            "SUBJECT_ID": 1,
+            "ADMITTIME": 1,
+            "DISCHTIME": 1,
+            "readmission": 1,
+            "HADM_ID": 1,
+             "related_notes": {
+                "$map": {
+                    "input": "$related_notes",    # Iterate over each note in related_notes
+                    "as": "note",                 # Alias for each element
+                    "in": {                       # Define the shape of each note
+                        "text": "$$note.TEXT",    # Include TEXT from each note
+                        "note_type": "$$note.CATEGORY"  # Include CATEGORY from each note
+                    }
+                }
+            }
 
-#, 
-# {"$lookup":{
-#     "from":"Noteevents",
-#     "localField":"HADM_ID", 
-#     "foreignField": "HADM_ID",
-#     "as": "related_notes"
-# }},
-# {"$unwind":"$related_notes"}, 
-# {"$addFields":{"note_text": "$related_notes.TEXT"}}, 
-# {
-#         "$project": {
-#             "_id": 1,
-#             "SUBJECT_ID": 1,
-#             "ADMITTIME": 1,
-#             "DISCHTIME": 1,
-#             "readmission": 1,
-#             "HADM_ID": 1,
-#             "note_text": 1
-#         }
-#     }
+            
+        }
+    }
+
+]
+
+# results = admission.aggregate(pipeline)
+# results = readmission_status.aggregate(pipeline_readmission_notes)
+# db.re]
+
+# admitted.insert_many(results)
 
 
-# Execute the pipeline and save to a new collection
-#results = admission.aggregate(pipeline)
-results = readmission_status.aggregate(pipeline_readmission_notes)
-db.readmissions_NOTES.insert_many(results)
-print("Data saved to the new collection.")
+
+
 
 #results = db.patients_admissions.aggregate(pipeline)
 
 # Save the results to a new collection
 #db.filtered_patients_admissions.insert_many(list(results))
 
-
-
-
+results = db.readmitted.aggregate(pipeline_readmission_notes)
+db.readmitted_notes.insert_many(results)
+print("Data saved to the new collection.")
 #from patients-admissions collection find patients with readmissions and transfer the data into another collection like patients-readmissions
 
 
