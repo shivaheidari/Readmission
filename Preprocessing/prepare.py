@@ -129,9 +129,14 @@ pipeline = [
 
 
 
-pipeline_last = [
+pipeline_last = [ { 
+        "$addFields": {
+            "DISCHTIME": { "$toDate": "$DISCHTIME" },
+            "ADMITTIME": { "$toDate": "$ADMITTIME" }
+        }
+    },
     # Self-join the collection to find other admissions for the same SUBJECT_ID
-    {
+    {   
         "$lookup": {
             "from": "Admission",
             "localField": "SUBJECT_ID",
@@ -155,12 +160,7 @@ pipeline_last = [
         }
     },
     # Convert string date fields to Date type
-    {
-        "$addFields": {
-            "DISCHTIME": { "$toDate": "$DISCHTIME" },
-            "related_admissions.ADMITTIME": { "$toDate": "$related_admissions.ADMITTIME" }
-        }
-    },
+   
     # Calculate the difference in days between discharge and the next admission
     {
         "$addFields": {
@@ -205,15 +205,9 @@ pipeline_last = [
     }
 ]
 
-# Execute the aggregation and save the result in a new collection
-results = admission.aggregate(pipeline_last)
-new_collection = db["admissions_with_readmission"]
-new_collection.insert_many(results)
-
-
 
 # Execute the pipeline and save to a new collection
-results = admission.aggregate(pipeline)
+results = admission.aggregate(pipeline_last)
 db.admissions_readmissions.insert_many(results)
 print("Data saved to the new collection.")
 
