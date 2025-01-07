@@ -126,7 +126,10 @@ pipeline = [
             "SUBJECT_ID": 1,
             "ADMITTIME": 1,
             "DISCHTIME": 1,
-            "readmission": 1
+            "readmission": 1,
+            "HADM_ID":1,
+            "ADMISSION_TYPE":1
+
         }
     },
     # Save results in a new collection
@@ -206,7 +209,8 @@ pipeline_last = [ {
             "SUBJECT_ID": 1,
             "ADMITTIME": 1,
             "DISCHTIME": 1,
-            "readmission": 1
+            "readmission": 1,
+            
         }
     }
 ]
@@ -214,7 +218,7 @@ pipeline_last = [ {
 
 # Execute the pipeline and save to a new collection
 results = admission.aggregate(pipeline)
-db.admissions_readmissions.insert_many(results)
+db.admissions_readmissions_HAMDM.insert_many(results)
 print("Data saved to the new collection.")
 
 #results = db.patients_admissions.aggregate(pipeline)
