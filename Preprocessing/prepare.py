@@ -81,6 +81,12 @@ pipeline = [
             }
         }
     },
+    {   
+        "$addFields": {
+            "DISCHTIME": { "$toDate": "$DISCHTIME" },
+            "related_admissions.ADMITTIME": { "$toDate": "$related_admissions.ADMITTIME" }
+        }
+    },
     # Calculate the difference in days between discharge and the next admission
     {
         "$addFields": {
@@ -207,7 +213,7 @@ pipeline_last = [ {
 
 
 # Execute the pipeline and save to a new collection
-results = admission.aggregate(pipeline_last)
+results = admission.aggregate(pipeline)
 db.admissions_readmissions.insert_many(results)
 print("Data saved to the new collection.")
 
