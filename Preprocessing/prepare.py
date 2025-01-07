@@ -127,8 +127,8 @@ pipeline = [
             "ADMITTIME": 1,
             "DISCHTIME": 1,
             "readmission": 1,
-            "HADM_ID":1,
-            "ADMISSION_TYPE":1
+            "HADM_ID":"$related_admissions.HADM_ID",
+            "ADMISSION_TYPE":"$related_admissions.ADMISSION_TYPE"
 
         }
     },
