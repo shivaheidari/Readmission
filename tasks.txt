@@ -27,7 +27,7 @@ Developing an NLP-based predictive model that analyzes clinical notes and patien
     all the notes of a patients including admission, ct, etc, are combined together and then divided into chuncks based on the smax ize of 
     a sequence model.
 
-    Resume from here. Read the rest of paper
+    
 4) Extrct features from clinical notes using biobert.
 
 5) Include structre data like patient demographic diagnoisis and lab results.
