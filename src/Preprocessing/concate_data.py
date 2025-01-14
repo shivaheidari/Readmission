@@ -46,7 +46,7 @@ pipeline_concatenate_and_save = [
     # Save the results to a new collection
     {
         "$merge": {
-            "into": "readmitted_concated",
+            "into": "no_readmitted_concated",
             "whenMatched": "merge",  # Optional: Merge if the document already exists
             "whenNotMatched": "insert"  # Insert if the document doesn't exist
         }
@@ -54,6 +54,6 @@ pipeline_concatenate_and_save = [
 ]
 
 # Execute the aggregation pipeline
-db.readmitted_notes.aggregate(pipeline_concatenate_and_save)
+db.no_readmited_notes.aggregate(pipeline_concatenate_and_save)
 
-print("Data saved to the 'readmitted_concated' collection.")
+print("Data saved to the 'No_readmitted_concated' collection.")
