@@ -68,5 +68,3 @@ check if how many unique patients there are.
 #limit dates
 
 #join the admission and noteevets
-
-#Links
