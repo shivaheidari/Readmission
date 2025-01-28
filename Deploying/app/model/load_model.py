@@ -2,8 +2,8 @@ import torch
 from transformers import AutoModelForAudioClassification, AutoTokenizer
 import os
 
-model_DIR = "../../../../models/00_34_bert_custom"
-if os.path.exists(model_DIR):
+MODEL_DIR = "../00_34_bert_custom"
+if os.path.exists(MODEL_DIR):
     print("yes")
 
 # def load_model():
