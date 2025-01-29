@@ -1,7 +1,7 @@
 from flask import request, jsonify, Flask
 from model.predict import predict
-
-
+from model.load_model import load_model
+from transformers import AutoTokenizer
 
 app = Flask(__name__)
 
@@ -13,18 +13,33 @@ def home():
     """
     return jsonify({"message": "Welcome to the Readmission Prediction API!!"})
 
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024 
+
 @app.route("/predict", methods=["POST"])
-def predict():
+def predict_endpoint():
+    model_path = "Readmission/Deploying/app/00_66_bert_custom_dict"
+    model = load_model(model_path)
+    tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+    
+    try:
+        if 'file' not in request.files:
+            return jsonify({"error": "No file provided"}), 400
+        file = request.files["file"]
+        if not file:
+           return jsonify({"error": "File is empty"}), 400
 
-    data = request.json  # Expecting JSON input
-    text = data.get("text")
+        #data = request.get_json()  # Get JSON input from Postman
+        #text = data.get("text", "")  # Extract the text input
+        text = file.read().decode("utf-8")
+        # if not text:
+        #     return jsonify({"error": "No text provided"}), 400  # Error handling
+        
+        results = predict(model, tokenizer, text)  # Call your prediction function
+        
+        return jsonify({"label": results["predicted_class"]})  # Return response
 
-    if not text:
-        return jsonify({"error": "No text provided"}), 400  # Return error if text is missing
-
-    # Call the prediction function
-    prediction = predict(text)
-    return jsonify({"prediction": prediction})  # Return prediction result
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
