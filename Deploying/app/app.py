@@ -1,4 +1,4 @@
-from flask import request, jsonify, Flask
+from flask import request, jsonify, Flask, render_template
 from model.predict import predict
 from model.load_model import load_model
 from transformers import AutoTokenizer
@@ -23,7 +23,8 @@ def predict_endpoint():
     
     try:
         if 'file' not in request.files:
-            return jsonify({"error": "No file provided"}), 400
+            #return jsonify({"error": "No file provided"}), 400
+            return render_template("index.html", prediction="No file uploaded.")
         
         file = request.files["file"]
         if not file:
@@ -37,7 +38,8 @@ def predict_endpoint():
         
         results = predict(model, tokenizer, text)  # Call your prediction function
         
-        return jsonify({"label": results["predicted_class"]})  # Return response
+        #return jsonify({"label": results["predicted_class"]})  # Return response
+        return render_template("index.html", prediction=f"Predicted Class: {results['predicted_class']}")
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
