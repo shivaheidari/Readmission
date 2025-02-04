@@ -28,15 +28,16 @@ Developing an NLP-based predictive model that analyzes clinical notes and patien
     a sequence model.
 
     
-4) Extrct features from clinical notes using biobert.
+4) Extrct features from clinical notes using biobert. Done
 
 5) Include structre data like patient demographic diagnoisis and lab results.
 
 6) Fine-tune a language model using clinical notes to generate text embeddings?
     6-1: use RNNS as benchmark
 
-7) Build the prediction model
+7) Build the prediction model  Done 
 
-8) Evaluation AUC-ROC
 
-9) Deplpoy
+8) Evaluation AUC-ROC   
+
+9) Deplpoy Done
