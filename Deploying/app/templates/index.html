@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>File Upload</title>
 </head>
 <body>
-    <h2>Upload a File for Prediction</h2>
+    <h2>Upload a File for Risk Prediction</h2>
     <form action="http://localhost:5000/predict" method="post" enctype="multipart/form-data">
         <input type="file" name="file">
         <br><br>

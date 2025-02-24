@@ -1,0 +1,93 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    /*background-image: url('background.jpg'); /* Add a background image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: red;
+}
+
+/* Main Container */
+.container {
+    background: rgba(230, 224, 224, 0.9);
+    width: 50%;
+    margin: 100px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Upload Icon */
+.upload-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+/* Heading */
+h2 {
+    color: #333;
+    font-size: 24px;
+}
+
+/* File Upload Button */
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.custom-file-upload:hover {
+    background-color: #0056b3;
+}
+
+/* Hide default input */
+input[type="file"] {
+    display: none;
+}
+
+/* Submit Button */
+input[type="submit"] {
+    margin-top: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Prediction Result */
+.result-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    color: #007bff;
+    font-size: 20px;
+}
+
+p {
+    font-size: 18px;
+    color: #444;
+    font-weight: bold;
+}
