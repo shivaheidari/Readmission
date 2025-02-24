@@ -18,8 +18,8 @@ app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
 
 @app.route("/predict", methods=["POST", "GET"])
 def predict_endpoint():
-    #model_path = "Readmission/Deploying/app/00_66_bert_custom_dict"
-    model_path = "00_66_bert_custom_dict"
+    model_path = "Readmission/Deploying/app/00_66_bert_custom_dict"
+    #model_path = "00_66_bert_custom_dict"
     model = load_model(model_path)
     tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
     
