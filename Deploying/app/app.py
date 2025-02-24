@@ -29,6 +29,7 @@ def predict_endpoint():
             return render_template("index.html", prediction="No file uploaded.")
         
         file = request.files["file"]
+        
         if not file:
            return jsonify({"error": "File is empty"}), 400
 
