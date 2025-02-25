@@ -9,8 +9,9 @@
 </head>
 <body>
     <h2>Upload a File for Risk Prediction</h2>
-    <form action="http://localhost:5000/predict" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
+    
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="file">
         <br><br>
         <input type="submit" value="Upload & Predict">
     </form>

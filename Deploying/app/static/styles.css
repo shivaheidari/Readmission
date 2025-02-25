@@ -50,11 +50,6 @@ h2 {
     background-color: #0056b3;
 }
 
-/* Hide default input */
-input[type="file"] {
-    display: none;
-}
-
 /* Submit Button */
 input[type="submit"] {
     margin-top: 20px;
