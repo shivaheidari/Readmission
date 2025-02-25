@@ -8,6 +8,17 @@
     <title>File Upload</title>
 </head>
 <body>
+    <nav>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/hbi.png') }}" alt="App Logo">
+        </div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Readmission Prediction</a></li>
+            <li><a href="#">Other Predictions</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
     <h2>Upload a File for Risk Prediction</h2>
     
     <form action="/predict" method="post" enctype="multipart/form-data">
