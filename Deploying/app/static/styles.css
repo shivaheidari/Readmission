@@ -12,7 +12,7 @@ body {
     backdrop-filter: blur(8px);
 }
 nav {
-    background: #2C3E50;  /* Dark blue background */
+    background: #a2bfdb;  /* Dark blue background */
     padding: 10px 0;
     text-align: center;
 }
@@ -51,7 +51,7 @@ body::before {
 }
 /* Main Container */
 .container {
-    background: rgba(230, 224, 224, 0.9);
+    background: rgba(109, 105, 105, 0.9);
     width: 50%;
     margin: 100px auto;
     padding: 30px;
