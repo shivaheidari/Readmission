@@ -7,10 +7,6 @@ import transformers
 from sklearn.metrics import roc_auc_score, f1_score, precision_score, recall_score, accuracy_score
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
 
-print("--- DEBUGGING INFO ---")
-print(f"Python Executable: {sys.executable}")
-print(f"Transformers Version: {transformers.__version__}")
-print("----------------------")
 
 # --- 1. Helper Functions and Classes 
 
@@ -44,7 +40,7 @@ def compute_metrics(eval_preds):
     preds = np.argmax(predictions, axis=1)
     
     return {
-        'roc_auc': roc_auc_score(labels, probs[:, 1]),
+        'roc_auc': roc_auc_score(labels, probs[:, 1]), 
         'f1': f1_score(labels, preds),
         'precision': precision_score(labels, preds),
         'recall': recall_score(labels, preds),
@@ -57,12 +53,14 @@ def compute_metrics(eval_preds):
 model_checkpoint = "emilyalsentzer/Bio_ClinicalBERT"
 
 # Load tokenizer and model
-tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, model_max_length=512)
 model = AutoModelForSequenceClassification.from_pretrained(model_checkpoint, num_labels=2)
 
 # Load datasets
-train_df = pd.read_parquet('Readmission/cluster/Data/train_dataset.parquet')
-val_df = pd.read_parquet('Readmission/cluster/Data/validation_dataset.parquet')
+train_df = pd.read_parquet('../Data/train_dataset.parquet')
+train_df.columns = train_df.columns.str.lower()
+val_df = pd.read_parquet('../Data/validation_dataset.parquet')
+val_df.columns = val_df.columns.str.lower()
 train_dataset = ReadmissionDataset(train_df, tokenizer)
 val_dataset = ReadmissionDataset(val_df, tokenizer)
 
