@@ -12,7 +12,7 @@ print(f"Python Executable: {sys.executable}")
 print(f"Transformers Version: {transformers.__version__}")
 print("----------------------")
 
-# --- 1. Helper Functions and Classes (from our previous work) ---
+# --- 1. Helper Functions and Classes 
 
 def clean_mimic_text(text):
     text = re.sub(r'\[\*\*.*?\*\*\]', '', text)
@@ -78,7 +78,7 @@ training_args = TrainingArguments(
     logging_steps=100,
     
     # Use the new parameter names
-    evaluation_strategy="steps",
+    eval_strategy="steps",
     eval_steps=500,
     save_strategy="steps",
     save_steps=500,
