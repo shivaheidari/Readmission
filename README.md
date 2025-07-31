@@ -32,10 +32,6 @@ The model's performance was evaluated on a held-out test set. Given the class im
 | **Precision** | 0.72  |
 | **Recall** | 0.59  |
 
-*(Note: Replace these with your actual scores!)*
-
-![Confusion Matrix](link/to/your/confusion_matrix_image.png)
-*(Bonus points for saving and embedding a confusion matrix plot)*
 
 ## 5. How to Run This Project
 
