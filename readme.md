@@ -1,0 +1,2 @@
+AI for Clinical Decision Support: Predicting 30-Day Hospital Readmission
+This project develops a state-of-the-art machine learning model to predict the risk of 30-day hospital readmission using unstructured clinical notes from the MIMIC-IV dataset. The core of this work is a fine-tuned Bio_ClinicalBERT model, enhanced with Explainable AI (XAI) techniques using SHAP to provide transparent, interpretable predictions for clinical decision support.
