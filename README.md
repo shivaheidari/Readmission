@@ -46,3 +46,8 @@ The model's performance was evaluated on a held-out test set. Given the class im
     ```
 3.  **Run the analysis:**
     Open and run the `Readmission_Analysis.ipynb` notebook.
+6. Future Work
+## 6. Future Work
+* **Advanced Models:** Advancing model with multi-modal predictions models.
+* **Deployment:** Containerize the prediction pipeline with **Docker** and deploy it as a REST API using **Flask/FastAPI**.
+* **Feature Engineering:** Incorporate structured data (lab values, demographics) alongside the text data.
