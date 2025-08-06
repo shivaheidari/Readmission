@@ -52,7 +52,6 @@ def compute_metrics(eval_preds):
         'accuracy': accuracy_score(labels, preds)
     }
 
-# --- Main Evaluation Logic ---
 
 if __name__ == "__main__":
     print("--- Starting Final Evaluation on the Test Set ---")
