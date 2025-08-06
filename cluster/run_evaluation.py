@@ -6,7 +6,6 @@ from sklearn.metrics import roc_auc_score, f1_score, precision_score, recall_sco
 from transformers import Trainer, AutoTokenizer, AutoModelForSequenceClassification
 
 # --- Helper Functions & Classes ---
-# It's good practice to include these directly so the script is self-contained.
 
 def clean_mimic_text(text):
     """Performs targeted cleaning of MIMIC-IV clinical notes."""
