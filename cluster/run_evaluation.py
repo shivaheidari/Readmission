@@ -1,0 +1,91 @@
+import pandas as pd
+import torch
+import re
+import numpy as np
+from sklearn.metrics import roc_auc_score, f1_score, precision_score, recall_score, accuracy_score
+from transformers import Trainer, AutoTokenizer, AutoModelForSequenceClassification
+
+# --- Helper Functions & Classes ---
+# It's good practice to include these directly so the script is self-contained.
+
+def clean_mimic_text(text):
+    """Performs targeted cleaning of MIMIC-IV clinical notes."""
+    text = str(text) # Ensure text is a string
+    text = re.sub(r'\[\*\*.*?\*\*\]', '', text)
+    text = re.sub(r'\_+', '', text)
+    text = re.sub(r'\-+', '', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
+class ReadmissionDataset(torch.utils.data.Dataset):
+    """PyTorch Dataset for readmission prediction."""
+    def __init__(self, dataframe, tokenizer):
+        self.df = dataframe
+        self.tokenizer = tokenizer
+
+    def __len__(self):
+        return len(self.df)
+
+    def __getitem__(self, idx):
+        text = self.df['text'].iloc[idx]
+        label = self.df['readmitted_within_30_days'].iloc[idx]
+        cleaned_text = clean_mimic_text(text)
+        encodings = self.tokenizer(
+            cleaned_text,
+            padding="max_length",
+            truncation=True,
+            return_tensors="pt"
+        )
+        item = {key: val.squeeze() for key, val in encodings.items()}
+        item['labels'] = torch.tensor(label)
+        return item
+
+def compute_metrics(eval_preds):
+    """Computes and returns a dictionary of evaluation metrics."""
+    predictions, labels = eval_preds
+    probs = np.exp(predictions) / np.exp(predictions).sum(axis=1, keepdims=True)
+    preds = np.argmax(predictions, axis=1)
+    
+    return {
+        'roc_auc': roc_auc_score(labels, probs[:, 1]),
+        'f1': f1_score(labels, preds),
+        'precision': precision_score(labels, preds),
+        'recall': recall_score(labels, preds),
+        'accuracy': accuracy_score(labels, preds)
+    }
+
+# --- Main Evaluation Logic ---
+
+if __name__ == "__main__":
+    print("--- Starting Final Evaluation on the Test Set ---")
+
+    # 1. DEFINE THE PATH TO YOUR BEST MODEL
+    # The Trainer saves the best model in a 'best_model' subfolder if you used a clean run.
+    # Or it could be a specific checkpoint like 'checkpoint-11000'.
+    # Update this path to your actual best model directory.
+    model_path = "./results_run2/best_model" 
+    
+    print(f"Loading model from: {model_path}")
+    
+    # 2. Load the fine-tuned model and tokenizer
+    model = AutoModelForSequenceClassification.from_pretrained(model_path, use_safetensors=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_path, model_max_length=512)
+
+    # 3. Load the test data and create the dataset
+    test_df = pd.read_parquet('test_dataset.parquet')
+    test_df.columns = test_df.columns.str.lower() # Standardize column names
+    test_dataset = ReadmissionDataset(test_df, tokenizer)
+
+    # 4. Use a new Trainer instance just for evaluation
+    eval_trainer = Trainer(
+        model=model,
+        compute_metrics=compute_metrics,
+    )
+
+    # 5. Get predictions and metrics for the test set
+    results = eval_trainer.predict(test_dataset)
+
+    print("\n--- Test Set Performance ---")
+    # The metrics are stored in the 'metrics' attribute of the results
+    for key, value in results.metrics.items():
+        print(f"{key}: {value:.4f}")
