@@ -13,6 +13,7 @@ patients_admissions = db["patients_admissions"]
 
 
 
+
 '''
 filter data :
 
@@ -67,4 +68,3 @@ check if how many unique patients there are.
 #limit dates
 
 #join the admission and noteevets
-
