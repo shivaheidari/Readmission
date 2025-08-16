@@ -56,7 +56,7 @@ def compute_metrics(eval_preds):
 if __name__ == "__main__":
     print("--- Starting Final Evaluation on the Test Set ---")
 
-    model_path = "./results_run2/best_model" 
+    model_path = "./results_2/best_model" 
     
     print(f"Loading model from: {model_path}")
     
