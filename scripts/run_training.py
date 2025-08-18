@@ -6,7 +6,7 @@ import numpy as np
 import transformers
 from sklearn.metrics import roc_auc_score, f1_score, precision_score, recall_score, accuracy_score
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
-
+from torch import nn
 
 # --- 1. Helper Functions and Classes 
 
@@ -46,6 +46,19 @@ def compute_metrics(eval_preds):
         'recall': recall_score(labels, preds),
         'accuracy': accuracy_score(labels, preds)
     }
+
+class WeightedLossTrainer(Trainer):
+    def compute_loss(self, model, inputs, return_outputs=False):
+        labels = inputs.pop("labels")
+        outputs = model(**inputs)
+        logits = outputs.get("logits")
+        
+        #  penalize errors on the positive class (1) more heavily.
+        weights = torch.tensor([1.0, 10.0]).to(self.args.device)
+        loss_fct = nn.CrossEntropyLoss(weight=weights)
+        loss = loss_fct(logits.view(-1, self.model.config.num_labels), labels.view(-1))
+        
+        return (loss, outputs) if return_outputs else loss
 
 # --- 2. Main Training Logic ---
 
@@ -93,6 +106,14 @@ trainer = Trainer(
     compute_metrics=compute_metrics,
 )
 
+trainer = WeightedLossTrainer(
+    model=model,
+    args=training_args,
+    train_dataset=train_dataset,
+    eval_dataset=val_dataset,
+    compute_metrics=compute_metrics,
+
+)
 # --- 3. Start Training ---
 print("Starting model training...")
 trainer.train()
