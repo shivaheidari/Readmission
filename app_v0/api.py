@@ -2,22 +2,17 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import torch 
 
-# --- 1. Define Input and Output Data Models ---
+# --- Input and Output Data Models ---
 
 class InputNote(BaseModel):
     hadm_id: int
     text: str
 
-# --- 2. Load Your Model (Placeholder) ---
-# In a real application, you would load your model and tokenizer here
-# This function would be called once when the API starts up.
+
 def load_model():
     """Loads the fine-tuned model and tokenizer."""
     print("Loading model and tokenizer...")
-    # Replace with your actual model loading logic
-    # model = AutoModelForSequenceClassification.from_pretrained(...)
-    # tokenizer = AutoTokenizer.from_pretrained(...)
-    model = "your_loaded_model" # Dummy model
+    model = "" 
     tokenizer = "your_loaded_tokenizer" # Dummy tokenizer
     print("Model loaded.")
     return model, tokenizer
