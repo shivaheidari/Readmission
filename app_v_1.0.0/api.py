@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import torch 
+from transformers import AutoTokenizer
 
 # --- Input and Output Data Models ---
 
@@ -12,8 +13,9 @@ class InputNote(BaseModel):
 def load_model():
     """Loads the fine-tuned model and tokenizer."""
     print("Loading model and tokenizer...")
-    model = "" 
-    tokenizer = "your_loaded_tokenizer" 
+    model = "results_weighted_30/best_model" 
+    model_checkpoint = "emilyalsentzer/Bio_ClinicalBert"
+    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, model_max_length=512)
     print("Model loaded.")
     return model, tokenizer
 
@@ -35,9 +37,7 @@ def predict_readmission(note: InputNote):
     Accepts a clinical note and returns a FHIR-compliant RiskAssessment.
     """
     # --- Prediction Logic (Placeholder) ---
-    # Replace this with your actual prediction logic from run_evaluation.py
-    # This would involve cleaning, tokenizing, and running the model.
-    risk_probability = 0.65  # Dummy probability
+    risk_probability = 0.65  
     prediction_outcome = "High Risk"
     interpretation_text = "Model prediction based on terms related to chronic comorbidities."
 
