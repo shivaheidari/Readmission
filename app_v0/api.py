@@ -13,7 +13,7 @@ def load_model():
     """Loads the fine-tuned model and tokenizer."""
     print("Loading model and tokenizer...")
     model = "" 
-    tokenizer = "your_loaded_tokenizer" # Dummy tokenizer
+    tokenizer = "your_loaded_tokenizer" 
     print("Model loaded.")
     return model, tokenizer
 
