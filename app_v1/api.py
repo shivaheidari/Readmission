@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import torch 
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 # --- Input and Output Data Models ---
 
@@ -13,9 +13,10 @@ class InputNote(BaseModel):
 def load_model():
     """Loads the fine-tuned model and tokenizer."""
     print("Loading model and tokenizer...")
-    model = "results_weighted_30/best_model" 
+    model_path = "./model/best_model" 
     model_checkpoint = "emilyalsentzer/Bio_ClinicalBert"
     tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, model_max_length=512)
+    model = AutoModelForSequenceClassification.from_pretrained(model_path)
     print("Model loaded.")
     return model, tokenizer
 

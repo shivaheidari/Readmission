@@ -14,3 +14,5 @@ Deploying/app/00_66_bert_custom_dict_nometa
 Explaintory/explain.py
 
 Data/
+
+app_v1/model
