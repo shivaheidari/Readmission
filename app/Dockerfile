@@ -13,7 +13,7 @@ COPY api.py .
 COPY ./model ./model
 
 # 5. Expose the port the API will run on
-EXPOSE 5000
+EXPOSE 8000
 
 # 6. Define the command to run your application
 CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
