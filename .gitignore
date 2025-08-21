@@ -16,3 +16,7 @@ Explaintory/explain.py
 Data/
 
 app_v1/model
+app_v0/app/model/
+app/model
+
+app_v0/app/static/images/
