@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  prediction_api:
+    build: ./services/prediction_api
+    container_name: prediction_service
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./services/prediction_api:/app
+
+  explanation_api:
+    build: ./services/explanation_api
+    container_name: explanation_service
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./services/explanation_api:/app
+    environment:
+      # You can pass your Gemini API key here
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
