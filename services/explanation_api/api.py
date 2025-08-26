@@ -1,12 +1,14 @@
 import os
+from dotenv import load_dotenv
 import google.generativeai as genai
 
-api_key = os.environ.get("API_KEY")
+load_dotenv()
 
-print(api_key)
+API_KEY = os.getenv("API_KEY")
 
-# model = genai.GenerationConfig("gemini-1.5-pro")
+if API_KEY:
 
-# response = model.genrate_content("Explain docker in simple terms")
+    genai.configure(api_key=API_KEY)
+else:
+    print("Warning: GEMNI_API_KEY not found")
 
-# print(response.text)
