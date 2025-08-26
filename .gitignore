@@ -19,4 +19,6 @@ app_v1/model
 app_v0/app/model/
 app/model
 
+.env
+
 app_v0/app/static/images/
