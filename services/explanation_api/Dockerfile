@@ -1,20 +1,21 @@
-# 1. Start from a lean Python base image
+# Start from a lean Python base image
 FROM python:3.10-slim
 
-# 2. Set the working directory inside the container
+# Set the working directory inside the container
 WORKDIR /app
 
-# 3. Copy and install dependencies
+# Copy and install dependencies for this specific service
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 4. Copy your application code and the trained model artifacts
+# Copy the service's API script
 COPY api.py .
-# This copies the trained model into a 'model' folder inside this container
-COPY ./Readmission/app/model ./model
 
-# 5. Expose the port the API will run on
+# Copy the shared model artifacts into a 'model' subfolder inside the container
+COPY ../../model_artifacts/best_model ./model/best_model
+
+# Expose the port the API will run on
 EXPOSE 8000
 
-# 6. Define the command to run your application
+# Define the command to run the application
 CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
