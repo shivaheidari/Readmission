@@ -5,14 +5,13 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # Copy and install dependencies for this specific service
-COPY requirements.txt .
+COPY /services/prediction/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the service's API script
-COPY api.py .
+COPY ./services/prediction/api.py .
 
-# Copy the shared model artifacts into a 'model' subfolder inside the container
-COPY Readmission/models/best_model ./model/best_model
+COPY ./models/best_model ./model/best_model
 
 # Expose the port the API will run on
 EXPOSE 8000
