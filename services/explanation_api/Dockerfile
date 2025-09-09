@@ -5,14 +5,13 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # 3. Copy and install dependencies
-# Note: This file needs its own requirements.txt
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 4. Copy your application code and the trained model artifacts
 COPY api.py .
 # This copies the trained model into a 'model' folder inside this container
-COPY ../prediction_api/model ./model
+COPY ../models/best_model ./model
 
 # 5. Expose the port the API will run on
 EXPOSE 8000
