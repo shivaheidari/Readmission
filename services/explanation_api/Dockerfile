@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 4. Copy your application code and the trained model artifacts
 COPY api.py .
 # This copies the trained model into a 'model' folder inside this container
-COPY ../models/best_model ./model
+COPY ./Readmission/app/model ./model
 
 # 5. Expose the port the API will run on
 EXPOSE 8000
