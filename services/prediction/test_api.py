@@ -26,3 +26,5 @@ def test_predict_readmission_invalid_input():
     
     # FastAPI should return a 422 Unprocessable Entity error for validation failures
     assert response.status_code == 422
+
+    
