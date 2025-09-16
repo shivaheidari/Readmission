@@ -22,3 +22,5 @@ app/model
 .env
 
 app_v0/app/static/images/
+
+model_artifacts/
