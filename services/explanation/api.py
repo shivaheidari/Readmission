@@ -18,6 +18,8 @@ else:
     print("Warning: API_KEY not found. Narrative generation will fail.")
 
 # --- 2. Define Data Models and Helpers ---
+
+
 class InputNote(BaseModel):
     text: str
 
