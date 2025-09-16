@@ -21,7 +21,7 @@ def load_assets():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     
     model_checkpoint = "emilyalsentzer/Bio_ClinicalBERT"
-    fine_tuned_model_path = "./model/best_model"
+    fine_tuned_model_path = "./model_artifacts/best_model"
 
     tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
     model = AutoModelForSequenceClassification.from_pretrained(fine_tuned_model_path)

@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY ./services/explanation/api.py .
 
 # Copy the shared model artifacts into a 'model' subfolder inside the container
-COPY ./models/best_model ./models/best_model
+COPY ./model_artifacts/best_model ./model_artifacts/best_model
 
 # Expose the port the API will run on
 EXPOSE 8000

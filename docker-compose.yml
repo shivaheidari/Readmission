@@ -19,6 +19,6 @@ services:
     ports:
       - "8001:8000"
     volumes:
-      - ./services/explanation:/app
+       - ./services/prediction_api/api.py:/app/api.py
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY}

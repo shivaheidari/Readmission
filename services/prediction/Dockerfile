@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the service's API script
 COPY ./services/prediction/api.py .
 
-COPY ./models/best_model ./models/best_model
+COPY ./model_artifacts/best_model ./model_artifacts/best_model
 
 # Expose the port the API will run on
 EXPOSE 8000
