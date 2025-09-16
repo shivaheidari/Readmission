@@ -11,6 +11,7 @@ import google.generativeai as genai
 # --- 1. Load Environment Variables and Configure LLM ---
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
+
 if API_KEY:
     genai.configure(api_key=API_KEY)
 else:
