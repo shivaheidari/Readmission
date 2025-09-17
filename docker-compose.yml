@@ -20,5 +20,5 @@ services:
       - "8001:8001"
     volumes:
        - ./services/prediction_api/api.py:/app/api.py
-    environment:
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    env_file:
+      - ./.env
