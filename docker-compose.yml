@@ -21,4 +21,4 @@ services:
     volumes:
        - ./services/prediction_api/api.py:/app/api.py
     env_file:
-      - ./.env
+       - ./.env
