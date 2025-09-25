@@ -20,5 +20,3 @@ services:
       - "8001:8000"
     volumes:
        - ./services/prediction_api/api.py:/app/api.py
-    env_file:
-       - .env
