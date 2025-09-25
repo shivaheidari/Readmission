@@ -1,6 +1,7 @@
 # Start from a lean Python base image
 FROM python:3.10-slim
-
+ARG GEMINI_API_KEY_ARG
+ENV GEMINI_API_KEY=$GEMINI_API_KEY_ARG
 # Set the working directory inside the container
 WORKDIR /app
 
