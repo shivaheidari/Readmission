@@ -9,7 +9,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ../services/prediction/api.py:/app/api.py
+      - ./services/prediction/api.py:/app/api.py
 
   explanation_api:
     build: 
