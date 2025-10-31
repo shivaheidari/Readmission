@@ -24,3 +24,9 @@ app/model
 app_v0/app/static/images/
 
 model_artifacts/
+
+services/prediction/Model/config.json
+
+services/prediction/Model/model.safetensors
+
+services/prediction/Model/training_args.bin
