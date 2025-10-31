@@ -9,6 +9,8 @@ class InputNote(BaseModel):
     hadm_id: int
     text: str
 
+
+
 def clean_mimic_text(text: str) -> str:
     text = re.sub(r'\[\*\*.*?\*\*\]', '', text)
     text = re.sub(r'\s+', ' ', text).strip()
