@@ -17,3 +17,33 @@ This microservice provides interpretability and narrative explanations for patie
 - Access to Google Gemini API (set `API_KEY` environment variable)
 
 ### Installation
+- pip install -r requirements.txt
+
+
+
+### Environment Variables
+- `API_KEY`: Your Gemini API key for narrative generation.
+
+## Running the Service
+
+### Locally
+- uvicorn api:app --host 0.0.0.0 --port 8001 --reload
+### Docker
+- docker build -t explanation-service .
+- docker run -p 8001:8001 explanation-service
+
+
+## API Endpoints
+
+### POST `/v1/explain`
+- **Input:** JSON with clinical note text `{ "text": "<patient discharge note>" }`
+- **Output:** JSON containing
+  - `prediction`: Risk class ("High Risk" / "Low Risk")
+  - `risk_score`: Probability score
+  - `narrative_summary`: Human-readable explanation
+  - `quantitative_explanation`: List of feature impacts from SHAP
+
+Example request:
+{
+"text": "Patient notes go here ..."
+}
