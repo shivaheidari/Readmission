@@ -82,10 +82,10 @@ def get_explanation(data: InputNote):
     explanation_data.sort(key=lambda x: x['impact'], reverse=True)
     top_positive_words = [item['word'] for item in explanation_data[:5] if item['impact'] > 0]
 
-    # Generate Narrative with Gemini
+    # Generating Narrative with Gemini
 
 
-    
+
     prompt = (
         "You are a clinical AI assistant. A machine learning model analyzed a patient's discharge note. "
         "Explain the model's prediction to a clinician in 2-3 concise, professional sentences.\n\n"
@@ -96,7 +96,7 @@ def get_explanation(data: InputNote):
     response = llm_model.generate_content(prompt)
     narrative_summary = response.text.strip()
 
-    # Return the enriched response
+    # Returning the enriched response
     return {
         "prediction": predicted_class,
         "risk_score": risk_probability,
