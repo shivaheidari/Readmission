@@ -1,8 +1,9 @@
 from fastapi.testclient import TestClient
-from api import app
+from services.prediction.api import app
 
 
 client = TestClient(app)
+
 def test_read_main():
     sample_note = {
       "hadm_id": 12345,
