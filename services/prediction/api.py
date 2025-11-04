@@ -34,7 +34,7 @@ def load_assets():
 
 model, tokenizer, device = load_assets()
 
-# --- 3. Create the FastAPI Application ---
+# --- 3. Create the FastAPI Application object---
 app = FastAPI(
     title="Prediction Service",
     description="Provides fast predictions for 30-day hospital readmission.",
