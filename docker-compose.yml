@@ -3,7 +3,7 @@ version: '3.8'
 services:
   prediction_api:
     build: 
-      context: .
+      context: ./services/prediction
       dockerfile: ./services/prediction/Dockerfile
     container_name: prediction_service
     ports:
@@ -13,7 +13,7 @@ services:
 
   explanation_api:
     build: 
-      context: .
+      context: ./services/explanation
       dockerfile: ./services/explanation/Dockerfile
     container_name: explanation_service
     ports:
