@@ -10,7 +10,6 @@ class InputNote(BaseModel):
     text: str
 
 API_KEY = os.getenv("GEMINI_API_KEY")
-print(API_KEY)
 model_checkpoint = "emilyalsentzer/Bio_ClinicalBERT"
 fine_tuned_model_path = "./model_artifacts/best_model"
 
