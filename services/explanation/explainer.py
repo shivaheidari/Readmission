@@ -32,7 +32,7 @@ class ExplanationService:
 
     def predict_and_explain(self, raw_text):
         if not self.llm_model:
-            raise RuntimeError("LLM client not initialized. Check API key.")
+            raise RuntimeError("LLM client not initialized! Check API key.")
         
         cleaned_text = self.clean_mimic_text(raw_text)
 

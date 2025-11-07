@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from explainer import ExplanationService
+from .explainer import ExplanationService
 import os
 from dotenv import load_dotenv
 
@@ -9,9 +9,11 @@ load_dotenv()
 class InputNote(BaseModel):
     text: str
 
-API_KEY = os.getenv("API_KEY")
+API_KEY = os.getenv("GEMINI_API_KEY")
+print(API_KEY)
 model_checkpoint = "emilyalsentzer/Bio_ClinicalBERT"
 fine_tuned_model_path = "./model_artifacts/best_model"
+
 
 explainer_service = ExplanationService(fine_tuned_model_path, model_checkpoint, API_KEY)
 
