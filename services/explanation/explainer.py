@@ -7,8 +7,8 @@ import google.generativeai as genai
 
 class ExplanationService:
     def __init__(self, fine_tuned_model_path, model_checkpoint, llm_api_key=None):
-        self.device = 0 if torch.cuda.is_available() else -1
         
+        self.device = "gpu" if torch.cuda.is_available() else "cpu"
         # Load tokenizer and model
         self.tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
         self.model = AutoModelForSequenceClassification.from_pretrained(fine_tuned_model_path)
