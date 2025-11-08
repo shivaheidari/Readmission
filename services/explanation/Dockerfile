@@ -4,7 +4,7 @@ FROM python:3.10-slim AS builder
 WORKDIR /build
 
 # Copy and install dependencies to separate directory to reduce final image size
-COPY ./services/explanation/requirements.txt .
+COPY requirements.txt .
 RUN pip install --prefix=/install --no-cache-dir -r requirements.txt
 
 
@@ -17,7 +17,7 @@ WORKDIR /app
 COPY --from=builder /install /usr/local
 
 # Copy application code
-COPY ./services/explanation/api.py .
+COPY api.py .
 
 # Copy model artifacts
 COPY ./model_artifacts/best_model ./model_artifacts/best_model

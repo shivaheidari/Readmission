@@ -4,7 +4,7 @@ services:
   prediction_api:
     build: 
       context: ./services/prediction
-      dockerfile: ./services/prediction/Dockerfile
+      dockerfile: Dockerfile
     container_name: prediction_service
     ports:
       - "8000:8000"
@@ -14,7 +14,7 @@ services:
   explanation_api:
     build: 
       context: ./services/explanation
-      dockerfile: ./services/explanation/Dockerfile
+      dockerfile: Dockerfile
     container_name: explanation_service
     ports:
       - "8001:8000"
