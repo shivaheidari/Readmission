@@ -7,15 +7,13 @@ import google.generativeai as genai
 
 class ExplanationService:
     def __init__(self, fine_tuned_model_path, model_checkpoint, llm_api_key=None):
-        # Use torch.device for PyTorch operations
+       
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         # Load tokenizer and model
         self.tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
         self.model = AutoModelForSequenceClassification.from_pretrained(fine_tuned_model_path)
         self.model.to(self.device)
-
-        # Pipeline expects device as int: 0 for GPU, -1 for CPU
         pipeline_device = 0 if torch.cuda.is_available() else -1
 
         self.pipeline = pipeline(
@@ -27,15 +25,13 @@ class ExplanationService:
         )
         self.explainer = shap.Explainer(self.pipeline)
 
-        # Configure Gemini LLM
         if llm_api_key:
             genai.configure(api_key=llm_api_key)
             try:
-                # Use updated, valid model name - change this if needed!
+            
                 self.llm_model = genai.GenerativeModel('gemini-flash-latest')
             except Exception as e:
                 print("LLM model initialization failed:", e)
-                # Optionally list available models
                 try:
                     models = genai.Client().models.list()
                     print("Available models:", [model.name for model in models])
@@ -53,12 +49,10 @@ class ExplanationService:
 
     def predict_and_explain(self, raw_text):
         if not self.llm_model:
-            # Optionally handle no LLM client case gracefully
             print("Warning: LLM model not initialized; skipping narrative generation.")
 
         cleaned_text = self.clean_mimic_text(raw_text)
 
-        # Prepare inputs on correct device
         inputs = self.tokenizer(cleaned_text, return_tensors="pt", truncation=True)
         inputs = {k: v.to(self.device) for k, v in inputs.items()}
 
