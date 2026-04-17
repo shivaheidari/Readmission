@@ -1,55 +1,59 @@
-# Predicting Hospital Readmission using Clinical Notes
+# Readmission Prediction and Explanation APIs
 
-A machine learning project to predict 30-day hospital readmission risk, helping hospitals identify high-risk patients for targeted interventions. This project leverages NLP techniques on unstructured EHR data.
+This project provides a microservices-based architecture for predicting hospital readmissions and generating insights/explanations for those predictions. The application is containerized using Docker and orchestrated with Docker Compose.
 
-## 1. Problem Statement
+## Project Structure
 
-Unplanned hospital readmissions are costly for healthcare systems and often indicate poor patient outcomes. By proactively identifying patients at high risk of readmission, hospitals can implement post-discharge plans to improve care and reduce costs. This project builds a binary classification model to predict which patients will be readmitted within 30 days of discharge.
+The project consists of two main services:
 
-## 2. Dataset
+*   **Prediction API** (`prediction_service`): Handles the machine learning predictions for hospital readmissions.
+    *   Source: `./services/prediction`
+    *   Exposed Port: `8000` (mapped to container port `8000`)
+*   **Explanation API** (`explanation_service`): Generates explainability metrics and insights for the model's predictions.
+    *   Source: `./services/explanation`
+    *   Exposed Port: `8001` (mapped to container port `8000`)
 
-This project uses the publicly available **MIMIC-III** dataset. Specifically, it utilizes the `NOTEEVENTS.csv` file containing de-identified clinical notes.
+## Prerequisites
 
-* **Preprocessing:** The text data was cleaned by removing stop words, punctuation, and converting to lowercase.
-* **Feature Engineering:** TF-IDF was used to vectorize the clinical notes into a numerical format suitable for machine learning.
+Before running the project, ensure you have the following installed on your machine:
+*   Docker
+*   Docker Compose
 
-## 3. Methodology
+## Configuration
 
-A **Logistic Regression** model was chosen as a strong, interpretable baseline. The pipeline consists of:
-1.  Loading clinical notes.
-2.  Text cleaning and preprocessing.
-3.  Vectorization using `TfidfVectorizer`.
-4.  Training the Logistic Regression classifier.
+The `explanation_api` service relies on environment variables to function correctly. 
 
-## 4. Results
+1. Create a `.env` file in the root directory of the project (next to `docker-compose.yml`).
+2. Add the necessary environment variables to this file. *(Update this section with the specific variables your app needs, e.g., `MODEL_PATH`, `DB_URI`, or `API_KEY`)*.
 
-The model's performance was evaluated on a held-out test set. Given the class imbalance inherent in readmission prediction, metrics beyond accuracy are crucial.
+## Running the Project
 
-| Metric         | Score |
-| -------------- | ----- |
-| **AUC-ROC** | 0.78  |
-| **F1-Score** | 0.65  |
-| **Precision** | 0.72  |
-| **Recall** | 0.59  |
+To start both services, open your terminal in the root directory of the project and run:
 
-![Architecture Diagram](images/readmission_architecture.drawio.png)
+```bash
+docker-compose up --build
+```
 
-## 5. How to Run This Project
+This will build the Docker images and start the containers. 
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/shivaheidari/Readmission.git](https://github.com/shivaheidari/Readmission.git)
-    cd Readmission
-    ```
-2.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-3.  **Run the analysis:**
-    Open and run the `Readmission_Analysis.ipynb` notebook.
-6. Future Work
-## 6. Future Work
-* **Advanced Models:** Advancing model with multi-modal predictions models.
-* **Deployment:** Containerize the prediction pipeline with **Docker** and deploy it as a REST API using **Flask/FastAPI**.
-* **Feature Engineering:** Incorporate structured data (lab values, demographics) alongside the text data.
+Once the containers are running, you can access the APIs at:
+*   **Prediction API:** `http://localhost:8000`
+*   **Explanation API:** `http://localhost:8001`
 
+To run the services in detached mode (in the background), use:
+```bash
+docker-compose up -d --build
+```
+
+To stop the running services:
+```bash
+docker-compose down
+```
+
+## Development & Live Reloading
+
+The `api.py` files for both services are mounted as volumes in the `docker-compose.yml` file:
+*   `./services/prediction/api.py:/app/api.py`
+*   `./services/explanation/api.py:/app/api.py`
+
+This means that if you make changes to either `api.py` file locally, the updates will immediately reflect inside the running Docker containers. If your Python web framework (e.g., FastAPI with Uvicorn, or Flask) is configured with live-reloading, the API will update automatically without needing to rebuild the Docker images.
